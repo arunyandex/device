@@ -1670,7 +1670,7 @@ static int _mt_cpufreq_pdrv_probe(struct platform_device *pdev)
 
 	ret = mt_cpufreq_regulator_map(pdev);
 	if (ret)
-		tag_pr_notice("%s regulator map fail\n", __func__);
+		tag_pr_debug("%s regulator map fail\n", __func__);
 
 #ifdef CONFIG_HYBRID_CPU_DVFS
 #ifdef INIT_MCUPM_VOLTAGE_SETTING

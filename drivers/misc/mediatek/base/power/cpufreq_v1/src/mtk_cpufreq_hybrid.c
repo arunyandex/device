@@ -167,7 +167,7 @@ int Ripi_cpu_dvfs_thread(void *data)
 	int ret;
 #endif
 	memset(pwdata, 0, sizeof(pwdata));
-	/* tag_pr_info("CPU DVFS received thread\n"); */
+	/* tag_pr_debug("CPU DVFS received thread\n"); */
 #ifndef CONFIG_MTK_TINYSYS_MCUPM_SUPPORT
 	cpufreq_act.data = (void *)cpufreq_buf;
 	ret = sspm_ipi_recv_registration_ex(IPI_ID_CPU_DVFS,
@@ -429,7 +429,7 @@ int dvfs_to_mcupm_command(u32 cmd, struct cdvfs_data *cdvfs_d)
 
 		aee_record_cpu_dvfs_cb(7);
 		if (ret != 0) {
-			tag_pr_notice
+			tag_pr_debug
 			("ret = %d, set cluster%d ON/OFF state to %d\n",
 				ret, cdvfs_d->u.set_fv.arg[0],
 				cdvfs_d->u.set_fv.arg[1]);
@@ -438,7 +438,7 @@ int dvfs_to_mcupm_command(u32 cmd, struct cdvfs_data *cdvfs_d)
 			__func__, __LINE__, ret);
 #endif
 		} else if (ack_data < 0) {
-			tag_pr_notice
+			tag_pr_debug
 			("ret = %d, set cluster%d ON/OFF state to %d\n",
 			ret, cdvfs_d->u.set_fv.arg[0],
 			cdvfs_d->u.set_fv.arg[1]);
@@ -898,7 +898,7 @@ void srate_doe(void)
 	ret = of_property_read_u32(node, "change_flag", &d->change_flag);
 
 	if (ret)
-		tag_pr_info("Cant find change_flag attr\n");
+		tag_pr_debug("Cant find change_flag attr\n");
 
 	if (!d->change_flag)
 		return;
