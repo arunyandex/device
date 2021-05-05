@@ -707,7 +707,7 @@ static struct SV_LOG_STR gSvLog[ISP_IRQ_TYPE_AMOUNT];
 			gSvLog[irq]._lastIrqTime.sec, gSvLog[irq]\
 			._lastIrqTime.usec,\
 			##__VA_ARGS__) < 0) {\
-			LOG_NOTICE("[Error] %s: snprintf failed", __func__);\
+			LOG_DBG("[Error] %s: snprintf failed", __func__);\
 		} \
 		if ('\0' != gSvLog[irq]._str[ppb][logT][str_leng - 1]) {\
 			LOG_DBG("log str over flow(%d)", irq);\
@@ -775,7 +775,7 @@ static struct SV_LOG_STR gSvLog[ISP_IRQ_TYPE_AMOUNT];
 			ptr2 = &(pSrc->_cnt[ppb][logT]);\
 			if (snprintf((char *)(pDes), avaLen,\
 					fmt, ##__VA_ARGS__) < 0) {\
-				LOG_NOTICE("[Error] %s: snprintf failed",\
+				LOG_DBG("[Error] %s: snprintf failed",\
 					   __func__);\
 			} \
 			while (*ptr++ != '\0') {\
@@ -1491,14 +1491,14 @@ static int ISP_ReadReg(struct ISP_REG_IO_STRUCT *pRegIo)
 	struct ISP_REG_STRUCT *pData;
 
 	if (pRegIo == NULL) {
-		LOG_NOTICE("Error: NULL pRegIo\n");
+		LOG_DBG("Error: NULL pRegIo\n");
 		return -EFAULT;
 	}
 
 	pData = (struct ISP_REG_STRUCT *)pRegIo->pData;
 
 	if (pData == NULL) {
-		LOG_NOTICE("Error: NULL pData\n");
+		LOG_DBG("Error: NULL pData\n");
 		return -EFAULT;
 	}
 
@@ -3995,7 +3995,7 @@ static long ISP_ioctl(struct file *pFile, unsigned int Cmd, unsigned long Param)
 		} else {
 			if (Dapc_Reg[0] < ISP_CAM_A_IDX ||
 			    Dapc_Reg[0] >= ISP_CAMSV0_IDX) {
-				LOG_NOTICE("module index(0x%x) error\n",
+				LOG_DBG("module index(0x%x) error\n",
 					   Dapc_Reg[0]);
 				Ret = -EFAULT;
 				break;

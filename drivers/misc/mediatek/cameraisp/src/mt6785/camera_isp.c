@@ -747,7 +747,7 @@ static struct SV_LOG_STR gSvLog[ISP_IRQ_TYPE_AMOUNT];
 			gSvLog[irq]._lastIrqTime.sec, \
 			gSvLog[irq]._lastIrqTime.usec, \
 			##__VA_ARGS__) < 0) {\
-			LOG_NOTICE("[Error] %s: snprintf failed", __func__);\
+			LOG_DBG("[Error] %s: snprintf failed", __func__);\
 		} \
 		if ('\0' != gSvLog[irq]._str[\
 			ppb][logT][str_leng - 1]) \
@@ -812,7 +812,7 @@ static struct SV_LOG_STR gSvLog[ISP_IRQ_TYPE_AMOUNT];
 			ptr2 = &(pSrc->_cnt[ppb][logT]); \
 			if (snprintf((char *)(pDes), avaLen,\
 					fmt, ##__VA_ARGS__) < 0) {\
-				LOG_NOTICE("[Error] %s: snprintf failed",\
+				LOG_DBG("[Error] %s: snprintf failed",\
 					   __func__);\
 			} \
 			while (*ptr++ != '\0') \
@@ -9572,7 +9572,7 @@ LB_CAM_SOF_IGNORE:
 	}
 	if (DmaStatus & AAO_DONE_ST) {
 #ifdef ENABLE_STT_IRQ_LOG
-		IRQ_LOG_KEEPER(module, m_CurrentPPB, _LOG_INF,
+		IRQ_LOG_KEEPER(module, m_CurrentPPB, _LOG_DBG,
 			"CAM_%c AAO_DONE_%d_%d(aao_ctrl_1:0x%x,aao_ctrl_2:0x%x)\n",
 			'A'+cardinalNum, sof_count[module],
 			ISP_RD32_TG_CAM_FRM_CNT(module, reg_module),
