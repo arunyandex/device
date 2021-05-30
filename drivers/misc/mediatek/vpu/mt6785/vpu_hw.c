@@ -323,7 +323,7 @@ static inline void lock_command(int core_s, int cmd)
 	mutex_lock(&(vpu_service_cores[core].cmd_mutex));
 	vpu_service_cores[core].is_cmd_done = false;
 	vpu_write_field(core, FLD_XTENSA_INFO17, 0);
-	LOG_INF("%s: vpu%d: cmd: %02xh, info00:%xh, info17:%xh\n",
+	LOG_DBG("%s: vpu%d: cmd: %02xh, info00:%xh, info17:%xh\n",
 		__func__, core, cmd,
 		vpu_read_field(core, FLD_XTENSA_INFO00),
 		vpu_read_field(core, FLD_XTENSA_INFO17));
@@ -942,7 +942,7 @@ EXPORT_SYMBOL(get_vpu_init_done);
 static void get_segment_from_efuse(void)
 {
 	segment_max_opp = 0;
-	LOG_INF("vpu segment_max_opp: %d\n", segment_max_opp);
+	LOG_DBG("vpu segment_max_opp: %d\n", segment_max_opp);
 }
 
 /* expected range, vvpu_index: 0~15 */
@@ -1634,9 +1634,8 @@ static int vpu_enable_regulator_and_clock(int core)
 	/*--enable regulator--*/
 	ret1 = vvpu_regulator_set_mode(true);
 	udelay(100);//slew rate:rising10mV/us
-if (g_vpu_log_level > Log_STATE_MACHINE) {
+	if (g_vpu_log_level > Log_STATE_MACHINE)
 	LOG_DBG("enable vvpu ret:%d\n", ret1);
-}
 
 
 
@@ -2061,9 +2060,14 @@ out:
 		opps.dspcore[core].index = 15;
 	opps.dsp.index = 9;
 	opps.ipu_if.index = 9;
+<<<<<<< HEAD
 if (g_vpu_log_level > Log_STATE_MACHINE) {
 	LOG_DBG("[vpu_%d] dis_rc -\n", core);
 }
+=======
+if (g_vpu_log_level > Log_STATE_MACHINE)
+	LOG_DBG("[vpu_%d] dis_rc -\n", core);
+>>>>>>> 3c9a2e793b43 (drivers: mtk-vpu: Fix rest of VPU logspam)
 	return ret;
 #endif
 }
@@ -2634,9 +2638,14 @@ static void vpu_hw_ion_free_handle(struct ion_client *client,
 		LOG_WRN("[vpu] invalid ion handle(0x%p)!\n", handle);
 		return;
 	}
+<<<<<<< HEAD
 	if (g_vpu_log_level > Log_STATE_MACHINE) {
 		LOG_DBG("[vpu] ion_free_handle(0x%p)\n", handle);
 	}
+=======
+	if (g_vpu_log_level > Log_STATE_MACHINE)
+		LOG_DBG("[vpu] ion_free_handle(0x%p)\n", handle);
+>>>>>>> 3c9a2e793b43 (drivers: mtk-vpu: Fix rest of VPU logspam)
 
 	ion_free(client, handle);
 }
@@ -4956,7 +4965,7 @@ int vpu_hw_processing_request(int core_s, struct vpu_request *request)
 		}
 	}
 
-	LOG_INF("%s: vpu%d: algo: %s(%d)\n", __func__,
+	LOG_DBG("%s: vpu%d: algo: %s(%d)\n", __func__,
 		core, algo ? algo->name : "", request->algo_id[core]);
 
 	/* step3. do processing, algo loader and d2d*/
