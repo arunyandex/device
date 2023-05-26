@@ -2060,14 +2060,8 @@ out:
 		opps.dspcore[core].index = 15;
 	opps.dsp.index = 9;
 	opps.ipu_if.index = 9;
-<<<<<<< HEAD
-if (g_vpu_log_level > Log_STATE_MACHINE) {
+	if (g_vpu_log_level > Log_STATE_MACHINE)
 	LOG_DBG("[vpu_%d] dis_rc -\n", core);
-}
-=======
-if (g_vpu_log_level > Log_STATE_MACHINE)
-	LOG_DBG("[vpu_%d] dis_rc -\n", core);
->>>>>>> 3c9a2e793b43 (drivers: mtk-vpu: Fix rest of VPU logspam)
 	return ret;
 #endif
 }
@@ -2638,15 +2632,8 @@ static void vpu_hw_ion_free_handle(struct ion_client *client,
 		LOG_WRN("[vpu] invalid ion handle(0x%p)!\n", handle);
 		return;
 	}
-<<<<<<< HEAD
-	if (g_vpu_log_level > Log_STATE_MACHINE) {
+if (g_vpu_log_level > Log_STATE_MACHINE)
 		LOG_DBG("[vpu] ion_free_handle(0x%p)\n", handle);
-	}
-=======
-	if (g_vpu_log_level > Log_STATE_MACHINE)
-		LOG_DBG("[vpu] ion_free_handle(0x%p)\n", handle);
->>>>>>> 3c9a2e793b43 (drivers: mtk-vpu: Fix rest of VPU logspam)
-
 	ion_free(client, handle);
 }
 
