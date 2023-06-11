@@ -9,7 +9,7 @@ ccache -M 100G
 export ARCH=arm64
 export KBUILD_BUILD_HOST=6785_DEV
 export KBUILD_BUILD_USER="AbzRaider"
-git clone --depth=1 https://gitlab.com/LeCmnGend/proton-clang.git  clang
+git clone --depth=1 https://gitlab.com/LeCmnGend/proton-clang.git -b clang-16 clang
 
 [ -d "out" ] && rm -rf AnyKernel && rm -rf out || mkdir -p out
 
