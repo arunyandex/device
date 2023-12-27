@@ -1,0 +1,53 @@
+#!/usr/bin/make -f
+
+# Basic variables
+BASEDIR=$(CURDIR)
+ARCH=arm64
+export LC_ALL=C ARCH BASEDIR
+
+# Specify the custom compiler
+CLANG_VERSION := clang-16
+CLANG_GIT_URL := https://gitlab.com/LeCmnGend/proton-clang.git
+CLANG_DIR := $(BASEDIR)/clang
+export PATH := $(CLANG_DIR)/bin:$(PATH)
+
+# Debian helper tools settings
+%:
+	dh $@
+
+# Custom build commands
+override_dh_auto_configure:
+	# Clone the specified version of Clang
+	-git clone --depth=1 $(CLANG_GIT_URL) -b $(CLANG_VERSION) $(CLANG_DIR)
+
+	# Run defconfig to generate .config
+	make -C $(BASEDIR) O=out ARCH=arm64 RM6785_defconfig
+
+override_dh_auto_build:
+	# Main kernel build
+	make -C $(BASEDIR) -j$(nproc --all) O=out \
+		ARCH=arm64 \
+		CC="clang" \
+		LD=ld.lld \
+		AR=llvm-ar \
+		NM=llvm-nm \
+		OBJCOPY=llvm-objcopy \
+		OBJDUMP=llvm-objdump \
+		CLANG_TRIPLE=aarch64-linux-gnu- \
+		CROSS_COMPILE="$(CLANG_DIR)/bin/aarch64-linux-gnu-" \
+		CROSS_COMPILE_ARM32="$(CLANG_DIR)/bin/arm-linux-gnueabi-" \
+		CONFIG_NO_ERROR_ON_MISMATCH=y 2>&1 | tee $(BASEDIR)/error.log
+
+override_dh_auto_clean:
+	# Clean up after build
+	-rm -rf $(BASEDIR)/out $(BASEDIR)/clang $(BASEDIR)/error.log
+
+override_dh_auto_install:
+	# Installation steps
+	# Assuming the kernel image is named 'vmlinuz' and located in 'out/arch/arm64/boot/'
+	# Adjust paths and filenames as necessary
+	dh_install -p linux-image-4.14.316-rmx6785 $(BASEDIR)/out/arch/arm64/boot/vmlinuz $(BASEDIR)/debian/linux-image-4.14.316-rmx6785/boot/
+
+	# If there are kernel modules
+	# make -C $(BASEDIR) O=out ARCH=arm64 modules_install INSTALL_MOD_PATH=$(BASEDIR)/debian/linux-image-4.14.316-rmx6785/
+

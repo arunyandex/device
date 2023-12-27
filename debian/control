@@ -1,0 +1,55 @@
+Source: linux-android-realme-mtk6785
+Section: kernel
+Priority: optional
+Maintainer: Your Name <your-email@example.com>
+Uploaders: Your Name <your-email@example.com>
+XS-Droidian-Host-Arch: arm64
+XS-Droidian-Build-On: amd64
+Build-Depends: build-essential,
+               dpkg-dev,
+               git,
+               findutils,
+               android-platform-prebuilts-python-linux-x86-2.7.5,
+               debhelper (>= 13),
+               bc,
+               rsync,
+               kmod,
+               cpio,
+               bison,
+               flex,
+               libssl-dev,
+               linux-initramfs-halium-generic,
+               linux-packaging-snippets,
+               android-sdk-ufdt-tests,
+               mkbootimg (>= 10.0.0),
+               mkdtboimg,
+               avbtool,
+               linux-initramfs-halium-generic:armhf, binutils-aarch64-linux-gnu, clang-android-9.0-r353983c, gcc-4.9-aarch64-linux-android, g++-4.9-aarch64-linux-android, libgcc-4.9-dev-aarch64-linux-android-cross
+Standards-Version: 4.5.0.3
+Vcs-Browser: https://github.com/DeadPool-4422/android-kernel_Azrael_RM6785
+Vcs-Git: https://github.com/DeadPool-4422/android-kernel_Azrael_RM6785.git
+
+Package: linux-image-4.14.316-rmx6785
+Architecture: arm64
+Depends: ${misc:Depends}
+Description: Linux kernel for Realme 6 with MTK6785 Processor
+ This package contains the Linux kernel for the Realme 6 (MTK6785).
+ .
+ Note: This package only ships the kernel image and modules.
+
+Package: linux-bootimage-4.14.316-rmx6785
+Architecture: arm64
+Pre-Depends: flash-bootimage (>= 4)
+Depends: ${misc:Depends},
+         linux-image-4.14.316-rmx6785 (= ${binary:Version})
+Description: Linux kernel for Realme 6 - Android Boot Image
+ This package contains the Linux kernel boot image for the Realme 6 (MTK6785).
+ .
+ Note: This package ships an Android Boot Image bundled with Halium's initramfs.
+
+Package: linux-headers-4.14.316-rmx6785
+Architecture: arm64
+Depends: linux-image-4.14.316-rmx6785 (= ${binary:Version})
+Description: Linux kernel headers for Realme 6 with MTK6785 Processor
+ This package contains the Linux kernel headers for the Realme 6 (MTK6785).
+
